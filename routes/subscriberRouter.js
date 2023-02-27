@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 var authenticate = require('../authenticate');
 
-const Subscribers = require('./models/subscribers');
+const Subscribers = require('../models/subscribers');
 const cors = require('./cors');
 
 const subscribersRouter = express.Router();
@@ -11,8 +11,8 @@ const subscribersRouter = express.Router();
 subscribersRouter.use(bodyParser.json());
 
 subscribersRouter.route('/')
-.options(cors.corsWithOptions, authenticate.verifyUser, (req, res) => { res.sendStatus(200); })
-.get(cors.cors, (req,res,next) => {
+.options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
+.get(cors.corsWithOptions, authenticate.verifyUser, (req,res,next) => {
     Subscribers.find()
     .then((subscribes) => {
         res.statusCode = 200;
@@ -57,21 +57,21 @@ subscribersRouter.route('/:subscriberId')
 })
 .post(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin,(req, res, next) => {
     res.statusCode = 403;
-    res.end('POST operation not supported on /dishes/'+ req.params.dishId);
+    res.end('POST operation not supported on /Subscribers/'+ req.params.subscriberId);
 })
 .put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin,(req, res, next) => {
-    Dishes.findByIdAndUpdate(req.params.dishId, {
+    Subscribers.findByIdAndUpdate(req.params.subscriberId, {
         $set: req.body
     }, { new: true })
-    .then((dish) => {
+    .then((subscriber) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(dish);
+        res.json(subscriber);
     }, (err) => next(err))
     .catch((err) => next(err));
 })
 .delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin,(req, res, next) => {
-    Dishes.findByIdAndRemove(req.params.dishId)
+    Subscribers.findByIdAndRemove(req.params.subscriber)
     .then((resp) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');

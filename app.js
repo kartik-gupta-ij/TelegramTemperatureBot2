@@ -3,14 +3,13 @@ var express = require('express');
 var path = require('path');
 var passport = require('passport');
 var usersRouter = require('./routes/users');
+var subscriberRouter = require('./routes/subscriberRouter')
 var funBot =require('./botconfig'); 
 const dotenv = require('dotenv'); 
 
 dotenv.config();
-
-const weatherUrl = `http://api.openweathermap.org/data/2.5/weather?q=Delhi&appid=${process.env.WEATHER_API_KEY}&units=metric`
 const mongodbUrl = process.env.MONGO_URL;
-const telegramBotToken = process.env.BOT_TOKEN
+
 var app = express();
 
 
@@ -25,6 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use('/users', usersRouter);
 funBot();
+app.use('/subscribers',subscriberRouter)
 
 const mongoose = require('mongoose');
 const connect = mongoose.connect(mongodbUrl);

@@ -24,7 +24,7 @@ Use the /Nsubscribers command to see the list of subscribed users.
 
   bot.onText(/\/subscribe/, (msg) => {
     Subscribers.findOne({ chatId: msg.chat.id }, (err, subscriber) => {
-      if (err) throw next(err);
+      if (err) throw err;
       if (subscriber === null) {
         Subscribers.create({
           chatId: msg.chat.id,
@@ -32,7 +32,7 @@ Use the /Nsubscribers command to see the list of subscribed users.
           lastName: msg.chat.last_name,
           username: msg.chat.username
         }, (err) => {
-          if (err) throw next(err);
+          if (err) throw err;
           bot.sendMessage(msg.chat.id, 'You have been subscribed to temperature updates.');
         });
       } else {
