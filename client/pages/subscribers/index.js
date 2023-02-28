@@ -13,7 +13,7 @@ export default function Home(props) {
   const [isError, setError] = useState(false)
   const [errorMessage, setErrorMessage] = useState(null)
 
-  const baseUrl = 'http://localhost:3001/';
+  const baseUrl = 'http://localhost:3001/'|| "https://telegramtemperaturebot2.onrender.com:3001/";
   useEffect(() => {
     setLoading(true)
     const bearer = 'Bearer ' + window.localStorage.getItem('token');
