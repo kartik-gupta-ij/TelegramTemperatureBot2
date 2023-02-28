@@ -10,7 +10,7 @@
     "start": "concurrently \"yarn run server \" \"yarn run client\"",
     "dev": "concurrently \"yarn run server \" \"yarn run client-dev\"",
     "prod": "NODE_ENV=production node app.js",
-    "build": "cd client && yarn install --ingore-engines && yarn run build"
+    "build": "cd client && yarn install && yarn run build"
   },
   "dependencies": {
     "concurrently": "^7.6.0",
