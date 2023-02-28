@@ -8,7 +8,7 @@ function funBot(req, res, next) {
 
   const weatherUrl = `http://api.openweathermap.org/data/2.5/weather?q=Delhi&appid=${process.env.WEATHER_API_KEY}&units=metric`
   const telegramBotToken = process.env.BOT_TOKEN
-
+  console.log(telegramBotToken)
   const bot = new TelegramBot(telegramBotToken, { polling: true });
 
 
