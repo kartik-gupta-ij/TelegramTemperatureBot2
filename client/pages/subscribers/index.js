@@ -5,6 +5,15 @@ import styles from '@/styles/subscribers.module.css'
 import { useState, useEffect } from 'react'
 const inter = Inter({ subsets: ['latin'] })
 
+export function getServerSideProps(){
+  const base_url=process.env.REACT_APP_LOCAL_SERVER
+  console.log(base_url)
+  return {
+    props:{
+      base_url:base_url
+    }
+  }
+}
 
 export default function Home(props) {
 
@@ -13,12 +22,11 @@ export default function Home(props) {
   const [isError, setError] = useState(false)
   const [errorMessage, setErrorMessage] = useState(null)
 
-  const baseUrl = 'http://localhost:3001/'|| "https://telegramtemperaturebot2.onrender.com:3001/";
+  const base_url=props.base_url
   useEffect(() => {
     setLoading(true)
     const bearer = 'Bearer ' + window.localStorage.getItem('token');
-    console.log(bearer)
-    fetch(baseUrl + 'subscribers', {
+    fetch(base_url + '/subscribers', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -89,7 +97,7 @@ export default function Home(props) {
           {isError && (<p> Error : {errorMessage}</p>)}
           {subscribers &&
             subscribers.map((item, i) => (
-              <>
+              <div key={i}>
                 <div className={styles.card}>
                   <p className={inter.className}>
                     {item.username}
@@ -110,7 +118,7 @@ export default function Home(props) {
                     {item.city}
                   </p>
                 </div>
-              </>
+              </div>
             ))
           }
 

@@ -7,6 +7,8 @@ var subscriberRouter = require('./routes/subscriberRouter')
 var funBot =require('./botconfig'); 
 const dotenv = require('dotenv'); 
 
+PORT = process.env.PORT || 5005;
+
 dotenv.config();
 const mongodbUrl = process.env.MONGO_URL;
 
@@ -49,6 +51,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(80, () => {
-  console.log('Server listening on port 80');
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
 });
