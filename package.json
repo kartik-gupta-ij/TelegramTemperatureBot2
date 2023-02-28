@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-
     "client": "yarn --cwd ./client run start",
     "client-dev": "yarn --cwd ./client run dev",
     "server": "nodemon app.js",
