@@ -11,12 +11,12 @@ export default function Home(props) {
   const [subscribers, setsubscribers] = useState(null)
   const [isLoading, setLoading] = useState(false)
   const [isError, setError] = useState(false)
-  const[errorMessage,setErrorMessage]=useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const baseUrl = 'http://localhost:3001/';
- useEffect(() => {
+  useEffect(() => {
     setLoading(true)
-    const bearer='Bearer ' + window.localStorage.getItem('token');
+    const bearer = 'Bearer ' + window.localStorage.getItem('token');
     console.log(bearer)
     fetch(baseUrl + 'subscribers', {
       method: 'GET',
@@ -26,10 +26,10 @@ export default function Home(props) {
       },
       credentials: 'same-origin'
     })
-    .then((res) => res.json())
+      .then((res) => res.json())
       .then((subscribers) => {
-      setsubscribers(subscribers)
-      setLoading(false)
+        setsubscribers(subscribers)
+        setLoading(false)
       })
       .catch((error) => {
         setLoading(false)
@@ -37,8 +37,14 @@ export default function Home(props) {
         setErrorMessage("Unauthorized")
       });
   }, [])
-  
+
   if (isLoading) return <p>Loading...</p>
+  
+    const handleLogout = async (event) => {
+      localStorage.setItem('token', null);
+      window.location.href = "/"
+    }
+  
 
   return (
     <>
@@ -55,7 +61,7 @@ export default function Home(props) {
             <code className={styles.code}>pages/index.js</code>
           </p>
           <div>
-            <button >logout</button>
+            <button onClick={handleLogout}>logout</button>
           </div>
         </div>
 
